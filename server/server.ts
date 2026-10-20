@@ -11,6 +11,9 @@ import quizRoutes from "./routes/quizRoutes.ts";
 // Configuration
 connectDb(process.env.MONGODB_URI).then(() => console.log("Database connected."));
 
+// Runtime Constants
+const PORT = process.env.PORT ?? 5000;
+
 // App Initialisation
 const app = express();
 
@@ -23,4 +26,4 @@ app.use("/users", userRoutes);
 app.use("/tokens", tokenRoutes);
 app.use("/quizzes", quizRoutes);
 
-app.listen(5000, () => console.log("Server listening on port 5000."));
+app.listen(PORT, () => console.log(`Server listening on port ${PORT}.`));
