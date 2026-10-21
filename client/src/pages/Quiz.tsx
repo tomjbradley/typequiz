@@ -1,7 +1,8 @@
 import { useState, useEffect, type FormEvent } from "react";
-import { useParams } from "react-router";
-import { Spinner, Button, Input } from "reactstrap";
+import { useParams, useNavigate } from "react-router";
+import { Spinner, ButtonGroup, Button, Input } from "reactstrap";
 
+import { useAuth } from "../AuthContext.tsx";
 import type { QuizMetadata } from "../types/quiz.ts";
 
 interface Memorandum {
@@ -10,6 +11,9 @@ interface Memorandum {
 }
 
 export default function Quiz() {
+	const { user } = useAuth();
+	const navigate = useNavigate();
+
 	const [quizMetadata, setQuizMetadata] = useState<QuizMetadata | null>(null);
 	const [memoranda, setMemoranda] = useState<Memorandum[]>([]);
 	const [isTesting, setIsTesting] = useState(false);
@@ -22,9 +26,9 @@ export default function Quiz() {
 			const res = await fetch(`https://typequiz.onrender.com/quizzes/${quizId}`);
 			const data = await res.json();
 
-			const { name, description, memoranda } = data;
+			const { _id, name, description, memoranda, userId } = data;
 
-			setQuizMetadata({ name, description });
+			setQuizMetadata({ _id, name, description, userId });
 			setMemoranda(memoranda.map((memorandum: Memorandum) => ({ memorandum, recalled: false })));
 		})();
 	}, []);
@@ -44,6 +48,14 @@ export default function Quiz() {
 		setInput("");
 	}
 
+	const deleteQuiz = async () => {
+		const token = localStorage.getItem("token");
+
+		await fetch(`https://typequiz.onrender.com/quizzes/${quizMetadata._id}`, { method: "DELETE", headers: { "Authorization" : `Bearer ${token}` }});
+
+		navigate("/");
+	}
+
 	return (
 		<section>
 			{quizMetadata ? (
@@ -57,7 +69,10 @@ export default function Quiz() {
 							<Button className="mt-2" color="danger" size="sm">Give Up</Button>
 						</div>
 					) : (
-						<Button color="success" onClick={() => setIsTesting(true)}>Start</Button>
+						<ButtonGroup>
+							<Button color="success" onClick={() => setIsTesting(true)}>Start</Button>
+							{user && user._id === quizMetadata.userId && <Button color="danger" onClick={deleteQuiz}>Delete</Button>}
+						</ButtonGroup>
 					)}
 					<ul className="auto-grid">
 						{memoranda.map(({ memorandum, recalled }, idx) => <li key={idx}>{recalled ? memorandum : "\u00A0"}</li>)}

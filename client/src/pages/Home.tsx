@@ -20,7 +20,9 @@ const Home = () => {
 	}, []);
 
 	const deleteQuiz = async (quizId) => {
-		await fetch(`https://typequiz.onrender.com/quizzes/${quizId}`);
+		const token = localStorage.getItem("token");
+
+		await fetch(`https://typequiz.onrender.com/quizzes/${quizId}`, { method: "DELETE", headers: { "Authorization" : `Bearer ${token}` }});
 
 		setQuizzes((prev) => prev.filter((quiz) => quiz._id !== quizId));
 	}
