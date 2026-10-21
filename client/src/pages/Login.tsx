@@ -2,7 +2,10 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { Alert, Form, FormGroup, Label, Input, Button } from "reactstrap";
 
+import { useAuth } from "../AuthContext.tsx";
+
 const Login = () => {
+	const { setUser } = useAuth();
 	const navigate = useNavigate();
 
 	const [username, setUsername] = useState("");
@@ -23,6 +26,12 @@ const Login = () => {
 
 		if (res.ok) {
 			localStorage.setItem("token", data.token);
+
+			const res = await fetch("https://typequiz.onrender.com/users/me", { headers: { "Authorization": `Bearer ${data.token}` } });
+			const user = await res.json();
+
+			setUser(user);
+
 			navigate("/");
 		} else {
 			setErrMsg(data.message);

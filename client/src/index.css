@@ -6,6 +6,12 @@
 	display: none;
 }
 
+.auto-grid-lg {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));;
+	gap: 1rem;
+}
+
 .auto-grid {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));;
