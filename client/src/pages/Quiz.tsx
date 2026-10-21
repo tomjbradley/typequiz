@@ -1,10 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, type FormEvent } from "react";
 import { useParams } from "react-router";
 import { Spinner, Button, Input } from "reactstrap";
 
-const Quiz = () => {
-	const [quizMetadata, setQuizMetadata] = useState(null);
-	const [memoranda, setMemoranda] = useState([]);
+import type { QuizMetadata } from "../types/quiz.ts";
+
+interface Memorandum {
+	memorandum: string;
+	recalled: boolean;
+}
+
+export default function Quiz() {
+	const [quizMetadata, setQuizMetadata] = useState<QuizMetadata | null>(null);
+	const [memoranda, setMemoranda] = useState<Memorandum[]>([]);
 	const [isTesting, setIsTesting] = useState(false);
 	const [input, setInput] = useState("");
 
@@ -18,19 +25,18 @@ const Quiz = () => {
 			const { name, description, memoranda } = data;
 
 			setQuizMetadata({ name, description });
-			setMemoranda(memoranda.map((memorandum) => ({ memorandum, recalled: false })));
+			setMemoranda(memoranda.map((memorandum: Memorandum) => ({ memorandum, recalled: false })));
 		})();
 	}, []);
 
-	const handleInput = (event) => {
-		const { value } = event.target;
+	const handleInput = (event: FormEvent<HTMLInputElement>) => {
+		const { value } = event.currentTarget;
 
 		setInput(value);
 
 		if (!memoranda.some(({ recalled, memorandum }) => !recalled && memorandum === value)) return;
 
-		setMemoranda((prev) => {
-			return prev.map((memorandum) => {
+		setMemoranda((prev) => { return prev.map((memorandum) => {
 				return memorandum.memorandum === value ? { ...memorandum, recalled: true } : memorandum;
 			});
 		});
@@ -62,4 +68,3 @@ const Quiz = () => {
 	);
 }
 
-export default Quiz;

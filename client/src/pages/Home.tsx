@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router";
 import { Spinner, Card, CardBody, CardTitle, CardText, Button } from "reactstrap";
 
+import type { Quiz } from "../types/quiz.ts";
+
 const Home = () => {
-	const [quizzes, setQuizzes] = useState([]);
+	const [quizzes, setQuizzes] = useState<Quiz[]>([]);
 
 	useEffect(() => {
 		(async () => {
