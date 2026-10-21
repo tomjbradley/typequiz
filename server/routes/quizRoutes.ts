@@ -42,9 +42,9 @@ router.post("/", passport.authenticate("jwt", { session: false }), async (req, r
 });
 
 router.delete("/:quizId", passport.authenticate("jwt", { session: false }), async (req, res) => {
-	const { deletedCount } = await Quiz.deleteOne({ _id: req.params.quizId })
+	const quiz = await Quiz.findOneAndDelete({ _id: req.params.quizId, userId: req.user.id });
 	
-	if (deletedCount === 0) res.status(404).json({ message: "Quiz not found." });
+	if (!quiz) res.status(404).json({ message: "Quiz not found." });
 
 	res.sendStatus(204);
 });
