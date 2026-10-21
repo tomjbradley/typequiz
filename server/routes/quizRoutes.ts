@@ -13,6 +13,14 @@ router.get("/", async (req, res) => {
 	res.status(200).json(quizzes);
 });
 
+router.get("/:quizId", async (req, res) => {
+	const quiz = await Quiz.findById(req.params.quizId);
+
+	if (!quiz) res.status(404).message({ message: "Quiz not found." });
+
+	res.status(200).json(quiz);
+});
+
 router.post("/", passport.authenticate("jwt", { session: false }), async (req, res) => {
 	const { name, description, memoranda } = req.body;
 
