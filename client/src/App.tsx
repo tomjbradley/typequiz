@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar.tsx";
 
 // Pages
 import Home from "./pages/Home.tsx";
+import Quiz from "./pages/Quiz.tsx";
 
 function App() {
 	return (
@@ -14,6 +15,7 @@ function App() {
 			<Container className="mt-2 mt-md-4">
 				<Routes>
 					<Route index element={<Home />} />
+					<Route path="/quizzes/:quizId" element={<Quiz />} />
 				</Routes>
 			</Container>
 		</>
