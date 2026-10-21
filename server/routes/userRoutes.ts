@@ -17,6 +17,9 @@ router.post("/", async (req, res) => {
 	if (typeof username !== "string") res.status(400).json({ message: "Username must be a string." });
 	if (typeof password !== "string") res.status(400).json({ message: "Password must be a string." });
 
+	if (username.length === 0) res.status(400).json({ message: "Username is required." });
+	if (password.length === 0) res.status(400).json({ message: "Password is required." });
+
 	if (username.length > 50) res.status(400).json({ message: "Username must be 50 characters or less." });
 	if (password.length > 256) res.status(400).json({ message: "Password must be 256 characters or less." });
 
