@@ -41,4 +41,12 @@ router.post("/", passport.authenticate("jwt", { session: false }), async (req, r
 	res.status(201).json(quiz);
 });
 
+router.delete("/:quizId", passport.authenticate("jwt", { session: false }), async (req, res) => {
+	const { deletedCount } = await Quiz.deleteOne({ _id: req.params.quizId })
+	
+	if (deletedCount === 0) res.status(404).json({ message: "Quiz not found." });
+
+	res.sendStatus(204);
+});
+
 export default router;
