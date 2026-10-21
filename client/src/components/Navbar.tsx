@@ -40,7 +40,7 @@ const MyNavbar = () => {
 								<NavLink tag={Link} to="/login">Login</NavLink>
 							</NavItem>
 							<NavItem>
-								<NavLink tag="button" to="/register">Register</NavLink>
+								<NavLink tag={Link} to="/register">Register</NavLink>
 							</NavItem>
 						</>
 					)}

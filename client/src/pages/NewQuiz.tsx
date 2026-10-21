@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router";
 import { Alert, Form, FormGroup, Label, Input, Button, ListGroup, ListGroupItem } from "reactstrap";
 
@@ -12,7 +12,7 @@ const NewQuiz = () => {
 	const [isErr, setIsErr] = useState(false);
 	const [errMsg, setErrMsg] = useState("");
 
-	const handleSubmit = async (e) => {
+	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		const token = localStorage.getItem("token");
@@ -32,13 +32,13 @@ const NewQuiz = () => {
 		}
 	}
 
-	const removeMemo = (index) => {
+	const removeMemo = (index: number) => {
 		setMemoranda((prev) => {
 			return prev.filter((_, i) => i !== index);
 		});
 	}
 
-	const updateMemo = (index, input) => {
+	const updateMemo = (index: number, input: string) => {
 		setMemoranda((prev) => {
 			return prev.map((memo, i) => i === index ? input : memo);
 		});

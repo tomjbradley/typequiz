@@ -19,7 +19,7 @@ const Home = () => {
 		})();
 	}, []);
 
-	const deleteQuiz = async (quizId) => {
+	const deleteQuiz = async (quizId: string) => {
 		const token = localStorage.getItem("token");
 
 		await fetch(`https://typequiz.onrender.com/quizzes/${quizId}`, { method: "DELETE", headers: { "Authorization" : `Bearer ${token}` }});

@@ -51,6 +51,8 @@ export default function Quiz() {
 	const deleteQuiz = async () => {
 		const token = localStorage.getItem("token");
 
+		if (!quizMetadata) return;
+
 		await fetch(`https://typequiz.onrender.com/quizzes/${quizMetadata._id}`, { method: "DELETE", headers: { "Authorization" : `Bearer ${token}` }});
 
 		navigate("/");

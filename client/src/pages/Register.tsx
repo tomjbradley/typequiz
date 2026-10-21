@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router";
 import { Alert, Form, FormGroup, Label, Input, Button } from "reactstrap";
 
@@ -11,7 +11,7 @@ const Register = () => {
 	const [isErr, setIsErr] = useState(false);
 	const [errMsg, setErrMsg] = useState("");
 
-	const handleSubmit = async (e) => {
+	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		const res = await fetch("https://typequiz.onrender.com/users", {
