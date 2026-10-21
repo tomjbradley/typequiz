@@ -31,9 +31,9 @@ const Home = () => {
 					</Card>
 				)) : <Spinner />}
 			</section>
-			<section>
+			{/* <section>
 				<h2>My Quizzes</h2>
-			</section>
+			</section> */}
 		</div>
 	);
 }
