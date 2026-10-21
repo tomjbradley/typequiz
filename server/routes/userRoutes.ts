@@ -1,11 +1,18 @@
 // NPM Packages
 import { Router } from "express";
+import passport from "passport";
 import { hash } from "bcryptjs";
 
 // Internal Modules
 import User from "../models/User.ts";
 
 const router = Router();
+
+router.get("/me", passport.authenticate("jwt", { session: false }), async (req, res) => {
+	const user = await User.findById(req.user.id).select("_id username");
+
+	res.status(200).json(user);
+});
 
 router.post("/", async (req, res) => {
 	const { username, password } = req.body;
