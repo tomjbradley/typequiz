@@ -20,7 +20,7 @@ git clone https://github.com/tomjbradley/typequiz.git
 cd typequiz
 npm install --prefix client
 npm install --prefix server
-npm start --prefix server ; npm run dev --prefix client
+npm start --prefix server & npm run dev --prefix client
 ```
 The server directory requires a .env file with suitable variables named `MONGODB_URI` and `JWT_SECRET`.
 
