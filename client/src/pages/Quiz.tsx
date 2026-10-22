@@ -24,7 +24,7 @@ export default function Quiz() {
 
 	useEffect(() => {
 		(async () => {
-			const res = await fetch(`https://typequiz.onrender.com/quizzes/${quizId}`);
+			const res = await fetch(`${import.meta.env.VITE_API_URL}/quizzes/${quizId}`);
 			const data = await res.json();
 
 			const { _id, name, description, memoranda, userId } = data;
@@ -61,7 +61,7 @@ export default function Quiz() {
 
 		if (!quizMetadata) return;
 
-		await fetch(`https://typequiz.onrender.com/quizzes/${quizMetadata._id}`, { method: "DELETE", headers: { "Authorization" : `Bearer ${token}` }});
+		await fetch(`${import.meta.env.VITE_API_URL}/quizzes/${quizMetadata._id}`, { method: "DELETE", headers: { "Authorization" : `Bearer ${token}` }});
 
 		navigate("/");
 	}

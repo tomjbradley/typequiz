@@ -17,7 +17,7 @@ const Login = () => {
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
-		const res = await fetch("https://typequiz.onrender.com/tokens", {
+		const res = await fetch(`${import.meta.env.VITE_API_URL}/tokens`, {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({ username, password })
@@ -27,7 +27,7 @@ const Login = () => {
 		if (res.ok) {
 			localStorage.setItem("token", data.token);
 
-			const res = await fetch("https://typequiz.onrender.com/users/me", { headers: { "Authorization": `Bearer ${data.token}` } });
+			const res = await fetch(`${import.meta.env.VITE_API_URL}/users/me`, { headers: { "Authorization": `Bearer ${data.token}` } });
 			const user = await res.json();
 
 			setUser(user);

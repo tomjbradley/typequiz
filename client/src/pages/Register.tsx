@@ -14,7 +14,7 @@ const Register = () => {
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
-		const res = await fetch("https://typequiz.onrender.com/users", {
+		const res = await fetch(`${import.meta.env.VITE_API_URL}/users`, {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({ username, password })

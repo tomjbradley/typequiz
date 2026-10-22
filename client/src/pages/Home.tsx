@@ -12,7 +12,7 @@ const Home = () => {
 
 	useEffect(() => {
 		(async () => {
-			const res = await fetch("https://typequiz.onrender.com/quizzes");
+			const res = await fetch(`${import.meta.env.VITE_API_URL}/quizzes`);
 			const data = await res.json();
 
 			setQuizzes(data);
@@ -22,7 +22,7 @@ const Home = () => {
 	const deleteQuiz = async (quizId: string) => {
 		const token = localStorage.getItem("token");
 
-		await fetch(`https://typequiz.onrender.com/quizzes/${quizId}`, { method: "DELETE", headers: { "Authorization" : `Bearer ${token}` }});
+		await fetch(`${import.meta.env.VITE_API_URL}/quizzes/${quizId}`, { method: "DELETE", headers: { "Authorization" : `Bearer ${token}` }});
 
 		setQuizzes((prev) => prev.filter((quiz) => quiz._id !== quizId));
 	}

@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
 			if (!token) return;
 
-			const res = await fetch("https://typequiz.onrender.com/users/me", { headers: { "Authorization": `Bearer ${token}` } });
+			const res = await fetch(`${import.meta.env.VITE_API_URL}/users/me`, { headers: { "Authorization": `Bearer ${token}` } });
 			const data = await res.json();
 
 			if (res.ok) {
